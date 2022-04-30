@@ -5,32 +5,33 @@ Personal boiler plate for starting gin project
 ## Folder Structure
 
 ```
-gin-boilerplate
-  .vscode
-  database
-    database.go
-    migrations
-      // Migrations file goes here
-  dist
-    // Mainly to hold compiled application
-  domains
-    // Your API usecase goes here
-  models
-    // All models goes here
-    structs
-  routes
-    routes.go
-  utils
-    constants
-      // All constants data goes here
-    helpers
-      // Helper function goes here
-  .env.example
-  go.mod
-  go.sum
-  main.go
-  Makefile
-  Readme.md
+.
+└── gin-boilerplate/
+    ├── .vscode
+    ├── database/
+    │   ├── database.go
+    │   └── migrations/
+    │       └── // Migrations file goes here
+    ├── dist/
+    │   └── // Mainly to hold compiled application
+    ├── domains/
+    │   └── // Your API usecase goes here
+    ├── models/
+    │   ├── // All models goes here
+    │   └── structs
+    ├── routes/
+    │   └── routes.go
+    ├── utils/
+    │   ├── constants/
+    │   │   └── // All constants data goes here
+    │   └── helpers/
+    │       └── // Helper function goes here
+    ├── .env.example
+    ├── go.mod
+    ├── go.sum
+    ├── main.go
+    ├── Makefile
+    └── Readme.md
 ```
 
 ## How to set up
