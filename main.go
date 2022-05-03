@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 	"time"
 
@@ -58,9 +59,25 @@ func main() {
 	// Initializing the server in a goroutine so that
 	// it won't block the graceful shutdown handling below
 	go func() {
-		helpers.Logger("MAIN PROCESS", "Server running in non TLS mode", false)
-		if err := server.ListenAndServe(); err != nil && errors.Is(err, http.ErrServerClosed) {
-			helpers.Logger("MAIN PROCESS", "Closing the server...", false)
+		isTLS := os.Getenv("APP_TLS")
+		if strings.ToLower(isTLS) == "true" {
+			helpers.Logger("MAIN PROCESS", "Server running in TLS mode", false)
+
+			appCertLocEnv := os.Getenv("APP_TLS_CERT_LOCATION")
+			appKeyLocEnv := os.Getenv("APP_TLS_KEY_LOCATION")
+
+			if appCertLocEnv == "" && appKeyLocEnv == "" {
+				appCertLocEnv, appKeyLocEnv = helpers.CreateOrLoadCerts()
+			}
+
+			if err := server.ListenAndServeTLS(appCertLocEnv, appKeyLocEnv); err != nil && errors.Is(err, http.ErrServerClosed) {
+				helpers.Logger("MAIN PROCESS", "Closing the server...", false)
+			}
+		} else {
+			helpers.Logger("MAIN PROCESS", "Server running in non TLS mode", false)
+			if err := server.ListenAndServe(); err != nil && errors.Is(err, http.ErrServerClosed) {
+				helpers.Logger("MAIN PROCESS", "Closing the server...", false)
+			}
 		}
 	}()
 

@@ -3,6 +3,7 @@ package helpers
 import (
 	"fmt"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -18,7 +19,7 @@ func Logger(event string, message string, isPanic bool) {
 	layout := "2006-01-02 15:04:05 Z07:00"
 	date := time.Now().In(location).Format(layout)
 
-	logMessage := fmt.Sprintf("[%s][%s] %s", date, event, message)
+	logMessage := fmt.Sprintf("[%s][%s] %s", date, strings.ToUpper(event), message)
 	if isPanic {
 		panic(logMessage)
 	} else {
