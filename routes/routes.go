@@ -23,13 +23,12 @@ func Load(route *gin.Engine) {
 	// Health
 	// Default health-check route
 	route.GET("/health", func(ctx *gin.Context) {
-		db := database.GetSession().Begin()
+		db := database.GetSession()
 		obj := structs.APIResponse{Code: http.StatusOK, Message: "System is normal"}
 		if err := db.Exec("select 1 + 1").Error; err != nil {
 			obj.Code = http.StatusInternalServerError
 			obj.Message = "There's something wrong with the system"
 		}
-		db.Commit()
 		ctx.SecureJSON(http.StatusOK, obj)
 	})
 

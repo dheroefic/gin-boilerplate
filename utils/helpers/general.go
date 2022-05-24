@@ -46,9 +46,9 @@ func WriteFile(location string, data []byte) error {
 
 	defer f.Close()
 
-	_, err2 := f.Write(data)
+	_, err = f.Write(data)
 
-	if err2 != nil {
+	if err != nil {
 		msg := fmt.Sprintf("Cannot writing file: %v", location)
 		Logger("WRITE FILE", msg, false)
 		return fmt.Errorf(msg)
